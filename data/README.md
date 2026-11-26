@@ -14,7 +14,7 @@ CSV tidak disimpan di repositori ini. Unduh sendiri dari Kaggle, lalu taruh di f
 | Lisensi | CC BY-SA 4.0 |
 | Rujukan yang dicantumkan Kaggle | Prasad & Chandra (2024), https://doi.org/10.1016/j.cose.2023.103545 |
 
-Metadata di atas dibaca dari API publik Kaggle (`https://www.kaggle.com/api/v1/datasets/view/kaggleprollc/phishing-url-websites-dataset-phiusiil` dan `.../datasets/list/...`) pada 2026-11-26. Halaman HTML Kaggle perlu JavaScript sehingga lisensi belum dicocokkan langsung dengan tampilan halaman.
+Metadata di atas dibaca dari API publik Kaggle (`https://www.kaggle.com/api/v1/datasets/view/kaggleprollc/phishing-url-websites-dataset-phiusiil` dan `.../datasets/list/...`) pada 2026-11-26, lalu dicek langsung di halaman Kaggle pada 2026-11-26 (lisensi "CC BY-SA 4.0", Version 1, berkas 56.85 MB, deskripsi 235,795 entries: 134,850 legitimate dan 100,945 phishing).
 
 ## Berkas yang dipakai dalam eksperimen
 
@@ -25,7 +25,7 @@ Metadata di atas dibaca dari API publik Kaggle (`https://www.kaggle.com/api/v1/d
 | SHA-256 | `a236549cd369cd80bd478ff8e1779cbf44c58d5c3f79f7a51a1adbed7d06d1c6` |
 | Tanggal unduh | belum pasti (berkas diterima dari anggota kelompok) |
 
-Ukuran berkas sama persis dengan berkas Kaggle. Kesamaan hash belum diperiksa terhadap unduhan ulang dari Kaggle.
+Ukuran berkas sama persis dengan berkas Kaggle. Kesamaan hash belum diperiksa terhadap unduhan ulang dari Kaggle. Hash-nya sama dengan `Dataset/Dataset.csv` di repositori acuan pradhyumnaag30/PhiUSIIL-Phishing-URL-Detection (commit `4b4d6ae`, dicek 2026-11-26).
 
 ## Data asal
 
