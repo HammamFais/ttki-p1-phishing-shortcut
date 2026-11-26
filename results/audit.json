@@ -155,9 +155,9 @@
   },
   "registered_domain": {
     "method": "tldextract top_domain_under_public_suffix, ICANN PSL snapshot bawaan (offline)",
-    "unique": 175509,
-    "appearing_more_than_once": 6013,
-    "rows_in_those": 66299,
+    "unique": 175513,
+    "appearing_more_than_once": 6012,
+    "rows_in_those": 66294,
     "mixed_label_domains": 120,
     "top10": [
       {
