@@ -236,7 +236,7 @@ Prasad, A. (2023). *PhiUSIIL phishing URL dataset* (Versi 2) [Set data]. Mendele
 
 Prasad, A., & Chandra, S. (2024a). PhiUSIIL: A diverse security profile empowered phishing URL detection framework based on similarity index and incremental learning. *Computers & Security, 136*, Artikel 103545. https://doi.org/10.1016/j.cose.2023.103545
 
-Prasad, A., & Chandra, S. (2024b). *PhiUSIIL Phishing URL (Website)* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.1016/j.cose.2023.103545
+Prasad, A., & Chandra, S. (2024b). *PhiUSIIL Phishing URL (Website)* [Dataset]. UCI Machine Learning Repository. https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset
 
 Sahingoz, O. K., Buber, E., Demir, O., & Diri, B. (2019). Machine learning based phishing detection from URLs. *Expert Systems with Applications, 117*, 345–357. https://doi.org/10.1016/j.eswa.2018.09.029
 
