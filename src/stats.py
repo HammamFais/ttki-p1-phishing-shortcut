@@ -1,6 +1,7 @@
 """Uji statistik atas selisih F1 per seed. Hasil: results/stats.csv.
 
-Efek dihitung per seed dalam poin persentase (pp): F3 - F2, F2 - F1, dan S2 - S1.
+Efek dihitung per seed dalam poin persentase (pp): selisih antar set fitur di setiap split,
+dan selisih S2 - S1 serta S2g - S1 untuk setiap set fitur.
 Metrik utama F1; ROC-AUC (x100) diuji juga sebagai pembanding karena pada S2 proporsi
 phishing di data uji berubah antar seed, dan F1 ikut terpengaruh proporsi itu.
 Paired t-test dua sisi dengan IK 95%; Wilcoxon signed-rank sebagai pembanding
@@ -17,15 +18,13 @@ from src.data import REPO_ROOT
 RESULTS = REPO_ROOT / "results"
 
 # (nama efek, kondisi pembanding, kondisi acuan); selisih = pembanding - acuan
-EFFECTS = [
-    ("F3 - F2 pada S1", ("F3", "S1"), ("F2", "S1")),
-    ("F3 - F2 pada S2", ("F3", "S2"), ("F2", "S2")),
-    ("F2 - F1 pada S1", ("F2", "S1"), ("F1", "S1")),
-    ("F2 - F1 pada S2", ("F2", "S2"), ("F1", "S2")),
-    ("S2 - S1 pada F1", ("F1", "S2"), ("F1", "S1")),
-    ("S2 - S1 pada F2", ("F2", "S2"), ("F2", "S1")),
-    ("S2 - S1 pada F3", ("F3", "S2"), ("F3", "S1")),
-]
+# F4 - F3 dan F4 - F2: tambahan untuk memisahkan efek templat dari efek jumlah fitur.
+# S2g: analisis sensitivitas (GroupShuffleSplit, desain awal S2).
+FEATURE_PAIRS = [("F3", "F2"), ("F2", "F1"), ("F4", "F3"), ("F4", "F2")]
+EFFECTS = (
+    [(f"{a} - {b} pada {s}", (a, s), (b, s)) for s in ("S1", "S2", "S2g") for a, b in FEATURE_PAIRS]
+    + [(f"{s} - S1 pada {f}", (f, s), (f, "S1")) for s in ("S2", "S2g") for f in ("F1", "F2", "F3", "F4")]
+)
 
 
 def per_seed(m, model, features, split, metric):

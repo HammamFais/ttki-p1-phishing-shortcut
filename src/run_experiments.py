@@ -1,4 +1,6 @@
-"""Eksperimen utama: 3 set fitur x 2 split x 2 model x 5 seed = 60 run, ditambah aturan R0.
+"""Eksperimen utama: 4 set fitur (F1-F4) x 3 split (S1, S2, S2g) x 2 model x 5 seed = 120 run,
+ditambah aturan R0. Desain brief awal (F1-F3 x S1/S2) adalah 60 run; F4 dan S2g ditambahkan kemudian
+(lihat README, bagian Riwayat desain).
 
 Hasil:
 - results/metrics.csv       satu baris per run (termasuk R0)
@@ -17,11 +19,11 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 from src.data import REPO_ROOT, load_clean
-from src.features import F2_COLUMNS, F3_COLUMNS, build_f3, f1_columns, r0_predict
+from src.features import F2_COLUMNS, F3_COLUMNS, TEMPLATE_FLAGS, build_f3, build_f4, f1_columns, r0_predict
 from src.splits import registered_domain, split_indices
 
 SEEDS = [7, 21, 42, 123, 2026]
-SPLITS = ["S1", "S2"]
+SPLITS = ["S1", "S2", "S2g"]
 RESULTS = REPO_ROOT / "results"
 
 
@@ -48,8 +50,9 @@ def main():
     df = load_clean()
     y = df["y"].to_numpy()
     groups = df["Domain"].map(registered_domain).to_numpy()
-    feature_sets = {"F1": df[f1_columns(df)], "F2": df[F2_COLUMNS], "F3": build_f3(df)}
-    assert list(feature_sets["F3"].columns) == F3_COLUMNS
+    f3 = build_f3(df)
+    feature_sets = {"F1": df[f1_columns(df)], "F2": df[F2_COLUMNS], "F3": f3, "F4": build_f4(df, f3)}
+    assert list(feature_sets["F4"].columns) == F3_COLUMNS + TEMPLATE_FLAGS
     print({k: v.shape[1] for k, v in feature_sets.items()}, "fitur;", len(df), "baris")
     top10 = set(pd.Series(groups).value_counts().head(10).index)  # 10 domain induk terbesar
 

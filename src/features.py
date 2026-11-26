@@ -1,8 +1,9 @@
-"""Definisi set fitur F1, F2, F3 dan aturan R0."""
+"""Definisi set fitur F1, F2, F3, F4 dan aturan R0."""
 import math
 import re
 from collections import Counter
 from ipaddress import ip_address
+from urllib.parse import urlsplit
 
 import pandas as pd
 import tldextract
@@ -26,6 +27,9 @@ F3_COLUMNS = [
     "host_length", "host_labels", "host_digits", "host_digit_ratio", "host_hyphens", "host_letters",
     "host_longest_label", "host_tld_length", "host_is_ip", "host_entropy",
 ]
+
+# F4 = F3 + penanda templat (tambahan di luar brief awal)
+TEMPLATE_FLAGS = ["is_https", "starts_www", "no_path_query"]
 
 _EXTRACT = tldextract.TLDExtract(suffix_list_urls=())
 
@@ -75,6 +79,23 @@ def host_features(domain):
 
 def build_f3(df):
     return pd.DataFrame([host_features(d) for d in df["Domain"]], index=df.index)[F3_COLUMNS]
+
+
+def template_flags(url):
+    """Tiga penanda templat URL sah, dihitung langsung dari string URL."""
+    p = urlsplit(url)
+    return {
+        "is_https": int(p.scheme.lower() == "https"),
+        "starts_www": int(p.netloc.lower().startswith("www.")),
+        "no_path_query": int(p.path in ("", "/") and not p.query and not p.fragment),
+    }
+
+
+def build_f4(df, f3=None):
+    """F4: F3 ditambah tiga penanda templat. Pembanding untuk memisahkan efek templat dari efek jumlah fitur."""
+    f3 = build_f3(df) if f3 is None else f3
+    flags = pd.DataFrame([template_flags(u) for u in df["URL"]], index=df.index)[TEMPLATE_FLAGS]
+    return pd.concat([f3, flags], axis=1)
 
 
 def r0_predict(urls):

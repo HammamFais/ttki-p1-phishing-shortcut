@@ -1,12 +1,17 @@
-"""Domain induk (eTLD+1) dan dua strategi split.
+"""Domain induk (eTLD+1) dan strategi split.
 
-S1: stratified random split 70/30.
-S2: GroupShuffleSplit 70/30 dengan grup = domain induk (eTLD+1).
+S1:  stratified random split 70/30.
+S2:  StratifiedGroupKFold(n_splits=10, shuffle=True) dengan grup = domain induk (eTLD+1);
+     3 dari 10 fold, dipilih acak per seed, digabung menjadi data uji (30%); 7 fold sisanya data latih.
+S2g: GroupShuffleSplit 70/30 dengan grup = domain induk. Desain awal S2; dipertahankan sebagai
+     analisis sensitivitas karena proporsi phishing di data ujinya tidak dijaga.
 """
+import numpy as np
 import tldextract
-from sklearn.model_selection import GroupShuffleSplit, train_test_split
+from sklearn.model_selection import GroupShuffleSplit, StratifiedGroupKFold, train_test_split
 
 TEST_SIZE = 0.3
+SGKF_FOLDS, SGKF_TEST_FOLDS = 10, 3
 
 # offline: pakai snapshot Public Suffix List bawaan tldextract, tanpa unduhan
 # hanya bagian ICANN dari PSL (bawaan tldextract), jadi x.web.app -> web.app
@@ -28,13 +33,20 @@ def registered_domain(host):
 
 
 def split_indices(split, y, groups, seed):
-    """Indeks baris train dan test untuk split 'S1' atau 'S2'."""
-    idx = range(len(y))
+    """Indeks baris train dan test untuk split 'S1', 'S2', atau 'S2g'."""
+    idx = np.arange(len(y))
     if split == "S1":
-        tr, te = train_test_split(list(idx), test_size=TEST_SIZE, random_state=seed, stratify=y)
-        return sorted(tr), sorted(te)
+        tr, te = train_test_split(idx, test_size=TEST_SIZE, random_state=seed, stratify=y)
+        return np.sort(tr), np.sort(te)
     if split == "S2":
+        sgkf = StratifiedGroupKFold(n_splits=SGKF_FOLDS, shuffle=True, random_state=seed)
+        folds = [te for _, te in sgkf.split(idx, y, groups)]
+        # grup terbesar selalu ditempatkan di fold-fold awal, jadi fold uji dipilih acak per seed
+        pick = np.random.default_rng(seed).choice(SGKF_FOLDS, SGKF_TEST_FOLDS, replace=False)
+        te = np.sort(np.concatenate([folds[i] for i in pick]))
+        return np.setdiff1d(idx, te), te
+    if split == "S2g":
         gss = GroupShuffleSplit(n_splits=1, test_size=TEST_SIZE, random_state=seed)
-        tr, te = next(gss.split(list(idx), y, groups))
-        return list(tr), list(te)
+        tr, te = next(gss.split(idx, y, groups))
+        return tr, te  # urutan sama dengan run tahap 4 agar hasilnya identik
     raise ValueError(split)
