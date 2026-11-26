@@ -1,14 +1,14 @@
 # Laporan Kontribusi dan Pernyataan Kejujuran Akademik
 
-Topik P1, Kelompok XX
+Topik P1, Kelompok 9
 Judul: Ketergantungan Model Deteksi URL Phishing pada Artefak Dataset: Evaluasi Fitur Berbasis Host dan Validasi Berbasis Domain Induk pada PhiUSIIL
 
 ## A. Kontribusi anggota
 
 | Nama / NRP | Peran dan kontribusi utama | Rincian | Persentase |
 |---|---|---|---|
-| Hammam Hidayatullah / 3124600096 | Eksperimen, kode, dan analisis | | |
-| Dimas Reza Ardhana / 3124600102 | Proposal awal dan pemilihan topik | | |
+| Hammam Hidayatullah / 3124600096 | Eksperimen, kode, dan analisis | Penentuan arah penelitian, audit data, eksperimen dan analisis, pengelolaan repositori GitHub, penyusunan draf paper | 50% |
+| Dimas Reza Ardhana / 3124600102 | Proposal awal dan pemilihan topik | Pemilihan topik P1, proposal awal, penyediaan dataset, peninjauan dan penyuntingan draf paper | 50% |
 | **Jumlah** | | | **100%** |
 
 ## B. Pernyataan kejujuran akademik
@@ -23,8 +23,11 @@ Kami menyatakan bahwa:
 
 ## C. Pernyataan pemakaian AI
 
-Kami memakai Claude (asisten AI dari Anthropic) melalui Claude Code untuk:
+Kami memakai Claude (asisten AI dari Anthropic) untuk:
 
+- penyusunan rencana dan brief proyek;
+- audit awal dataset;
+- peninjauan hasil setiap tahap;
 - audit data dan pemeriksaan angka;
 - penulisan kode eksperimen, uji statistik, dan pembuatan gambar;
 - penelusuran dan pengecekan rujukan ke sumber aslinya;

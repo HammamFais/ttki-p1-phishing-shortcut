@@ -1,7 +1,7 @@
 # ttki-p1-phishing-shortcut
 
 Proyek akhir Tata Tulis Karya Ilmiah (TTKI), topik P1: deteksi URL phishing pada dataset PhiUSIIL.
-Kelompok: Hammam Hidayatullah (3124600096) dan Dimas Reza Ardhana (3124600102), Sarjana Terapan Teknik Informatika, Politeknik Elektronika Negeri Surabaya.
+Kelompok 9: Hammam Hidayatullah (3124600096) dan Dimas Reza Ardhana (3124600102), Sarjana Terapan Teknik Informatika, Politeknik Elektronika Negeri Surabaya.
 
 Draf paper: [paper/draft.md](paper/draft.md).
 

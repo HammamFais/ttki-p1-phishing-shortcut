@@ -8,7 +8,7 @@
 
 Email: ¹hammamfais7@gmail.com, ²
 
-Kelompok XX, Tata Tulis Karya Ilmiah, Topik P1
+Kelompok 9, Tata Tulis Karya Ilmiah, Topik P1
 
 ---
 

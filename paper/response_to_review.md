@@ -1,6 +1,6 @@
 # Respons terhadap Peer Review
 
-Topik P1, Kelompok XX: Hammam Hidayatullah (3124600096) dan Dimas Reza Ardhana (3124600102)
+Topik P1, Kelompok 9: Hammam Hidayatullah (3124600096) dan Dimas Reza Ardhana (3124600102)
 
 Berkas ini diisi setelah peer review silang selesai (buku petunjuk Bab 8.2). Peer review belum dilakukan, sehingga tabel di bawah masih kosong.
 
