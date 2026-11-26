@@ -1,0 +1,223 @@
+{
+  "file": {
+    "name": "PhiUSIIL_Phishing_URL_Dataset.csv",
+    "bytes": 56854345,
+    "sha256": "a236549cd369cd80bd478ff8e1779cbf44c58d5c3f79f7a51a1adbed7d06d1c6"
+  },
+  "shape": {
+    "rows": 235795,
+    "columns": 56,
+    "missing_values": 0,
+    "infinite_values": 0,
+    "full_row_duplicates": 0
+  },
+  "label_original": {
+    "legitimate_1": 134850,
+    "phishing_0": 100945
+  },
+  "url_duplicates": {
+    "urls_appearing_more_than_once": 425,
+    "extra_rows_removed": 425,
+    "urls_with_label_conflict": 0,
+    "duplicate_rows_by_label": {
+      "phishing": 425
+    }
+  },
+  "after_dedup": {
+    "rows": 235370,
+    "legitimate": 134850,
+    "phishing": 100520
+  },
+  "columns": {
+    "non_numeric": [
+      "FILENAME",
+      "URL",
+      "Domain",
+      "TLD",
+      "Title"
+    ],
+    "id_text_excluded": [
+      "FILENAME",
+      "URL",
+      "Domain",
+      "TLD",
+      "Title"
+    ],
+    "numeric_feature_count": 50
+  },
+  "filename_mw_prefix": {
+    "rows": 36286,
+    "phishing_among_them": 36286
+  },
+  "template_by_label": {
+    "legitimate": {
+      "rows": 134850,
+      "https": {
+        "n": 134850,
+        "pct": 100.0
+      },
+      "www": {
+        "n": 134850,
+        "pct": 100.0
+      },
+      "no_path_query": {
+        "n": 134850,
+        "pct": 100.0
+      },
+      "r0_match": {
+        "n": 134850,
+        "pct": 100.0
+      },
+      "sim100": {
+        "n": 134850,
+        "pct": 100.0
+      }
+    },
+    "phishing": {
+      "rows": 100945,
+      "https": {
+        "n": 49196,
+        "pct": 48.74
+      },
+      "www": {
+        "n": 41746,
+        "pct": 41.36
+      },
+      "no_path_query": {
+        "n": 72272,
+        "pct": 71.6
+      },
+      "r0_match": {
+        "n": 1038,
+        "pct": 1.03
+      },
+      "sim100": {
+        "n": 786,
+        "pct": 0.78
+      }
+    }
+  },
+  "single_feature_auc_top10": [
+    {
+      "feature": "URLSimilarityIndex",
+      "auc": 0.0039,
+      "oriented_auc": 0.9961
+    },
+    {
+      "feature": "LineOfCode",
+      "auc": 0.0097,
+      "oriented_auc": 0.9903
+    },
+    {
+      "feature": "NoOfExternalRef",
+      "auc": 0.012,
+      "oriented_auc": 0.988
+    },
+    {
+      "feature": "NoOfImage",
+      "auc": 0.0204,
+      "oriented_auc": 0.9796
+    },
+    {
+      "feature": "NoOfSelfRef",
+      "auc": 0.0275,
+      "oriented_auc": 0.9725
+    },
+    {
+      "feature": "NoOfJS",
+      "auc": 0.0292,
+      "oriented_auc": 0.9708
+    },
+    {
+      "feature": "NoOfCSS",
+      "auc": 0.0424,
+      "oriented_auc": 0.9576
+    },
+    {
+      "feature": "HasSocialNet",
+      "auc": 0.1053,
+      "oriented_auc": 0.8947
+    },
+    {
+      "feature": "HasCopyrightInfo",
+      "auc": 0.1245,
+      "oriented_auc": 0.8755
+    },
+    {
+      "feature": "HasDescription",
+      "auc": 0.1538,
+      "oriented_auc": 0.8462
+    }
+  ],
+  "hostname": {
+    "unique": 220086,
+    "rows": 235795
+  },
+  "registered_domain": {
+    "method": "tldextract top_domain_under_public_suffix, ICANN PSL snapshot bawaan (offline)",
+    "unique": 175509,
+    "appearing_more_than_once": 6013,
+    "rows_in_those": 66299,
+    "mixed_label_domains": 120,
+    "top10": [
+      {
+        "domain": "web.app",
+        "rows": 5754,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "firebaseapp.com",
+        "rows": 5594,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "repl.co",
+        "rows": 3754,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "weeblysite.com",
+        "rows": 3097,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "ipfs.io",
+        "rows": 1559,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "workers.dev",
+        "rows": 1438,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "square.site",
+        "rows": 1199,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "dweb.link",
+        "rows": 975,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "xsph.ru",
+        "rows": 928,
+        "phishing_pct": 100.0
+      },
+      {
+        "domain": "pantheonsite.io",
+        "rows": 900,
+        "phishing_pct": 100.0
+      }
+    ]
+  },
+  "environment": {
+    "python": "3.14.0",
+    "pandas": "3.1.1",
+    "numpy": "2.5.5",
+    "scikit_learn": "1.9.1",
+    "tldextract": "5.4.0",
+    "os": "Windows-11-10.0.26300-SP0"
+  }
+}
