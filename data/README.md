@@ -33,6 +33,7 @@ Kaggle menyalin dataset yang aslinya diterbitkan di Mendeley Data:
 
 - Prasad, A. (2023). *PhiUSIIL phishing URL dataset* (Version 2) [Data set]. Mendeley Data. https://doi.org/10.17632/shwpxscxy2.2, lisensi CC BY 4.0.
 - Metadata DataCite (https://api.datacite.org/dois/10.17632/shwpxscxy2.2, dibaca 2026-11-26) mencantumkan satu *creator*, "Prasad, Arvind", dengan tanggal terbit 2023-11-15 dan lisensi CC BY 4.0. Shalini Chandra tercatat sebagai *contributor* (tipe "Other"), bukan *creator*. Paper pendampingnya ditulis Prasad dan Chandra (2024).
+- Dataset yang sama juga ada di UCI Machine Learning Repository (dataset 967, "PhiUSIIL Phishing URL (Website)", donasi 3/3/2024, CC BY 4.0). Sitasi resmi di halaman UCI: "Prasad, A. & Chandra, S. (2024). PhiUSIIL Phishing URL (Website) [Dataset]. UCI Machine Learning Repository. https://doi.org/10.1016/j.cose.2023.103545." DOI itu milik paper pendamping; UCI tidak mencantumkan DOI khusus untuk dataset ini (dicek 2026-11-26).
 - Lisensi Kaggle (CC BY-SA 4.0) berbeda dari lisensi Mendeley (CC BY 4.0). Repositori ini tidak menyebarkan ulang data, hanya merujuk ke sumbernya.
 
 ## Label

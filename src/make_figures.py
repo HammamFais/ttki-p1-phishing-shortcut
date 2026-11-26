@@ -9,6 +9,7 @@ Hasil:
 Jalankan dari folder repo:  python -m src.make_figures
 """
 import json
+import re
 
 import matplotlib
 
@@ -31,6 +32,13 @@ MARKER = {"LR": "o", "RF": "s", "rule": "D"}
 LABEL = {"LR": "Logistic Regression", "RF": "Random Forest", "rule": "R0 (aturan templat)"}
 INK, MUTED, GRID, SURFACE = "#0b0b0b", "#52514e", "#e4e3df", "#ffffff"
 FEATURES = ["R0", "F1", "F2", "F3", "F4"]
+# nama tampilan di paper agar tidak bentrok dengan metrik F1; kode dan CSV tetap memakai F1-F4
+DISPLAY = {"R0": "R0", "F1": "FL", "F2": "FU", "F3": "FH", "F4": "FHT"}
+
+
+def disp(text):
+    """Ganti kode set fitur F1-F4 dengan nama tampilan (dipakai untuk nilai, bukan nama metrik)."""
+    return re.sub(r"\bF([1-4])\b", lambda mm: DISPLAY[mm.group(0)], str(text))
 
 plt.rcParams.update({
     "font.family": "sans-serif", "font.sans-serif": ["Arial", "Segoe UI", "Verdana"], "font.size": 9, "axes.edgecolor": MUTED, "axes.labelcolor": INK,
@@ -57,7 +65,7 @@ def fig_flow(audit):
         f"CSV PhiUSIIL (Kaggle)\n{num(audit['shape']['rows'], 0)} URL, 56 kolom",
         f"Audit dan hapus {audit['url_duplicates']['extra_rows_removed']} URL duplikat\n"
         f"{num(audit['after_dedup']['rows'], 0)} URL; phishing = kelas positif",
-        "Set fitur\nR0 (aturan), F1 (50), F2 (22), F3 (10), F4 (13)",
+        "Set fitur\nR0 (aturan), FL (50), FU (22), FH (10), FHT (13)",
         "Split 70/30 per seed (7, 21, 42, 123, 2026)\nS1 acak berstrata | S2 grup eTLD+1 berstrata | S2g grup eTLD+1",
         "Latih LR (scaler di pipeline) dan RF\nhanya pada data latih, hiperparameter bawaan",
         "Evaluasi di data uji\nF1, recall, ROC-AUC, PR-AUC, FN, FP, waktu",
@@ -114,7 +122,7 @@ def fig_f1_fn(m):
                 ax.set_title(f"{split}: " + ("stratified random split" if split == "S1" else "grup eTLD+1 berstrata"),
                              fontsize=9, color=INK, loc="left")
     for ax in axes[1]:
-        ax.set_xticks(x, FEATURES)
+        ax.set_xticks(x, [DISPLAY[f] for f in FEATURES])
         ax.set_xlabel("Set fitur")
     handles = [Line2D([], [], ls="", marker=MARKER[k], color=COLOR[k], ms=6, mec=SURFACE) for k in ("rule", "LR", "RF")]
     fig.legend(handles, [LABEL[k] for k in ("rule", "LR", "RF")], loc="lower center", ncol=3, frameon=False)
@@ -135,7 +143,7 @@ def fig_composition(m, s):
                        facecolor=COLOR[model] if filled else SURFACE, edgecolor=COLOR[model], linewidth=1.3,
                        label=f"{LABEL[model]}, {split}")
     ax.set_xlabel("Proporsi phishing di data uji (%)")
-    ax.set_ylabel("F1-score pada F3")
+    ax.set_ylabel("F1-score pada FH")
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: num(v, 3)))
     ax.grid(color=GRID, lw=0.6)
     ax.set_axisbelow(True)
@@ -192,7 +200,7 @@ def tables(audit, m, s, st):
                 if d.empty:
                     continue
                 g = lambda c, k=100: (d[c].mean() * k, d[c].std() * k)
-                rows.append([f, "aturan" if model == "rule" else model, d.n_features.iloc[0],
+                rows.append([disp(f), "aturan" if model == "rule" else model, d.n_features.iloc[0],
                              pm(*g("f1")), pm(*g("recall")), pm(*g("precision")), pm(*g("roc_auc")), pm(*g("pr_auc")),
                              pm(*g("fn", 1), 1), pm(*g("fp", 1), 1)])
         return f"## {title}\n\n" + md_table(
@@ -206,7 +214,7 @@ def tables(audit, m, s, st):
     f1s = st[st.metric == "f1"]
     for _, r in f1s.iterrows():
         p = r.p_ttest
-        rows.append([r.effect, r.model, num(r.mean_diff_pp, 2), f"[{num(r.ci95_low_pp, 2)}; {num(r.ci95_high_pp, 2)}]",
+        rows.append([disp(r.effect).replace(" - ", " − "), r.model, num(r.mean_diff_pp, 2), f"[{num(r.ci95_low_pp, 2)}; {num(r.ci95_high_pp, 2)}]",
                      "–" if np.isnan(p) else ("< 0,0001" if p < 1e-4 else num(p, 4)),
                      "–" if np.isnan(r.p_wilcoxon) else num(r.p_wilcoxon, 4), f"{r.n_negative}/{r.n_positive}"])
     parts.append("## Tabel 4. Selisih F1 per seed (poin persentase)\n\n"
@@ -222,9 +230,10 @@ def tables(audit, m, s, st):
                          num(100 * f3["LR"], 2), num(100 * f3["RF"], 2)])
     parts.append("## Tabel 5. Komposisi data uji per seed pada split berbasis grup\n\n"
                  + md_table(["Split", "Seed", "n uji", "Porsi uji (%)", "Phishing di uji (%)", "Domain induk di train dan uji",
-                             "Domain top-10 di uji (baris)", "F1 F3 LR (%)", "F1 F3 RF (%)"], rows))
+                             "Domain top-10 di uji (baris)", "F1 FH LR (%)", "F1 FH RF (%)"], rows))
 
     (FIG / "tables.md").write_text("# Tabel untuk paper\n\nDibuat otomatis oleh `python -m src.make_figures` dari `results/`. Jangan disunting manual.\n\n"
+                                  "Nama set fitur: FL = F1, FU = F2, FH = F3, FHT = F4 pada kode dan CSV.\n\n"
                                   + "\n\n".join(parts) + "\n", encoding="utf-8")
 
 
