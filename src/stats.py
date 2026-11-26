@@ -58,6 +58,19 @@ def main():
                 rows.append({"effect": name, "model": model, "metric": metric, **test((a - b).to_numpy())})
     out = pd.DataFrame(rows)
     out.to_csv(RESULTS / "stats.csv", index=False)
+
+    # hubungan komposisi data uji dengan F1 pada split berbasis grup (Pearson, n = 5 seed)
+    s = pd.read_csv(RESULTS / "split_report.csv")
+    corr = []
+    for split in ("S2", "S2g"):
+        comp = s[s.split == split][["seed", "phishing_pct_test", "top10_domain_rows_test"]]
+        for model in ("LR", "RF"):
+            d = m[(m.split == split) & (m.features == "F3") & (m.model == model)].merge(comp, on="seed")
+            for col in ("phishing_pct_test", "top10_domain_rows_test"):
+                r, p = stats.pearsonr(d[col], d["f1"]) if d[col].nunique() > 1 else (np.nan, np.nan)
+                corr.append({"split": split, "features": "F3", "model": model, "x": col, "y": "f1",
+                             "pearson_r": r, "p": p, "n_seeds": len(d)})
+    pd.DataFrame(corr).to_csv(RESULTS / "composition_corr.csv", index=False)
     with pd.option_context("display.width", 200, "display.float_format", "{:.4f}".format):
         print(out.to_string(index=False))
 

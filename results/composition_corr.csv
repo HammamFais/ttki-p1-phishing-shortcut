@@ -1,0 +1,9 @@
+split,features,model,x,y,pearson_r,p,n_seeds
+S2,F3,LR,phishing_pct_test,f1,,,5
+S2,F3,LR,top10_domain_rows_test,f1,0.972219647587975,0.005535061391694913,5
+S2,F3,RF,phishing_pct_test,f1,,,5
+S2,F3,RF,top10_domain_rows_test,f1,0.9994595759548183,1.507997580343365e-05,5
+S2g,F3,LR,phishing_pct_test,f1,0.983212218463386,0.002604516821567957,5
+S2g,F3,LR,top10_domain_rows_test,f1,0.9707902811633763,0.005966407137001998,5
+S2g,F3,RF,phishing_pct_test,f1,0.9835092275151849,0.002535818453822788,5
+S2g,F3,RF,top10_domain_rows_test,f1,0.969760715327957,0.006283640911652985,5
