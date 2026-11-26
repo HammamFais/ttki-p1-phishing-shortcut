@@ -1,0 +1,18 @@
+# data besar tidak di-commit (lihat data/README.md)
+data/*.csv
+*.csv.zip
+
+# folder di luar cakupan repo
+_reference/
+_contoh/
+
+# lingkungan Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# sistem operasi
+Thumbs.db
+desktop.ini
+.DS_Store
