@@ -26,9 +26,8 @@ Kami menyatakan bahwa:
 Kami memakai Claude (asisten AI dari Anthropic) untuk:
 
 - penyusunan rencana dan brief proyek;
-- audit awal dataset;
+- audit dataset dan pemeriksaan angka;
 - peninjauan hasil setiap tahap;
-- audit data dan pemeriksaan angka;
 - penulisan kode eksperimen, uji statistik, dan pembuatan gambar;
 - penelusuran dan pengecekan rujukan ke sumber aslinya;
 - penyusunan draf paper, README, dan dokumen pendukung.
